@@ -1,0 +1,17 @@
+name: Trigger GitLab CI/CD
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  trigger-gitlab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger GitLab Pipeline
+        run: |
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -H "PRIVATE-TOKEN: ${{ secrets.GITLAB_TOKEN }}" \
+          -d '{"ref": "main"}' \
+          https://gitlab.com/api/v4/projects/64816687/trigger/pipeline
